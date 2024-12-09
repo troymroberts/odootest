@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Custom menu for vendor bill uploader -->
+        <record id="action_vendor_bills_upload" model="ir.actions.act_window">
+            <field name="name">Vendor Bills</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('move_type', '=', 'in_invoice')]</field>
+            <field name="context">{'default_move_type': 'in_invoice'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Upload your first vendor bill
+                </p>
+            </field>
+        </record>
+
+        <!-- Custom menu item with web icon -->
+        <menuitem id="menu_vendor_bills_upload"
+                  name="Vendor Bills"
+                  action="action_vendor_bills_upload"
+                  sequence="10"
+                  groups="vendor_bill_access.group_vendor_bill_uploader"
+                  web_icon="vendor_bill_access,static/description/icon.png"/>
+    </data>
+</odoo>
