@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_wipay_form" name="WiPay Form">
+        <div class="o_wipay_form" t-att-data-payment-provider="provider.id"
+             t-att-data-amount="amount" t-att-data-currency="currency"
+             t-att-data-redirect-url="redirect_url"
+             t-att-data-fee-structure="provider.wipay_fee_structure"
+             t-att-data-tokenization-enabled="provider.wipay_tokenization_enabled"
+             t-att-data-partner-id="partner_id">
+            
+            <!-- Loading Spinner -->
+            <div class="o_loading_spinner d-none">
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+                <span class="ms-2">Processing...</span>
+            </div>
+            
+            <!-- Error Display -->
+            <div class="alert alert-danger d-none wipay-error" role="alert"/>
+            
+            <!-- Main Form Container -->
+            <div class="wipay-form-container">
+                <!-- Content will be dynamically populated by JS -->
+            </div>
+            
+            <!-- Payment Method Icons -->
+            <div class="payment-methods-footer mt-3">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="/payment_wipay/static/src/img/visa.png" 
+                         alt="Visa" class="payment-icon me-2"/>
+                    <img src="/payment_wipay/static/src/img/mastercard.png" 
+                         alt="Mastercard" class="payment-icon me-2"/>
+                </div>
+                <div class="text-center text-muted small mt-2">
+                    <i class="fa fa-lock me-1"></i>
+                    Secured by WiPay
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

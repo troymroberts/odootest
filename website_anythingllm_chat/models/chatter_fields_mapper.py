@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+
+website_chatter_fields_dict = {
+    'data_embed_id': 'data-embed-id',
+    'data_greeting': 'data-greeting',
+    'data_no_sponsor': 'data-no-sponsor',
+    'data_sponsor_link': 'data-sponsor-link',
+    'data_sponsor_text': 'data-sponsor-text',
+    'src': 'src',
+    'data_assistant_name': 'data-assistant-name',
+    'data_username': 'data-username',
+    'data_support_email': 'data-support-email',
+    'data_default_message': 'data-default-message',
+    'data_window_height': 'data-window-height',
+    'data_window_width': 'data-window-width',
+    'data_text_size': 'data-text-size',
+    'data_base_api_url': 'data-base-api-url',
+    'data_brand_image_url': 'data-brand-image-url',
+    'data_chat_icon': 'data-chat-icon',
+    'data_position': 'data-position',
+    'data_button_color': 'data-button-color',
+    'data_user_bg_color': 'data-user-bg-color',
+    'data_assistant_bg_color': 'data-assistant-bg-color',
+    'data_open_on_load': 'data-open-on-load',
+}

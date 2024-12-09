@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_wipay" model="payment.provider">
+        <field name="name">WiPay</field>
+        <field name="code">wipay</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="state">test</field> <!-- Set default state to test mode -->
+        <field name="module_id" ref="base.module_payment_wipay"/>
+        <field name="module_state">installed</field>
+    </record>
+
+</odoo>
