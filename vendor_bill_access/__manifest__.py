@@ -13,11 +13,6 @@
         'security/ir.model.access.csv',
         'views/vendor_bill_views.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'vendor_bill_access/static/**/*',
-        ],
-    },
     'images': ['static/description/icon.png'],
     'installable': True,
     'application': True,
