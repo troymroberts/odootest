@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <menuitem id="chatter_fields_menu_root" name="Website Chatter Fields" sequence="10" />
-    <menuitem id="chatter_fields_main_menu" name="Wesbite Chatter Fields" parent="chatter_fields_menu_root"
-        sequence="10" />
-    <menuitem id="chatter_fields_menu" name="Website Chatter Fields" action="chatter_fields_action"
-        parent="chatter_fields_main_menu" sequence="10" />
-</odoo>

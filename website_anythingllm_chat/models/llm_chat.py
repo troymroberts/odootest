@@ -91,4 +91,39 @@ class MailChannel(models.Model):
             self.env['mail.message'].create({
                 'model': 'mail.channel',
                 'res_id': channel_id,
-                'message_type': '
+                'message_type': 'comment',
+                'body': llm_response,
+                'author_id': self.env.ref('base.partner_root').id,
+            })
+
+            return True
+
+        except Exception as e:
+            _logger.error("Error sending message to LLM: %s", str(e))
+            llm_message.write({
+                'state': 'error',
+                'error_message': str(e)
+            })
+            return False
+
+    def _get_chat_history(self, channel_id, limit=5):
+        """Get recent chat history for context"""
+        messages = self.env['llm.chat.message'].search([
+            ('channel_id', '=', channel_id),
+            ('state', '=', 'received')
+        ], limit=limit, order='create_date desc')
+        
+        history = []
+        for msg in reversed(messages):
+            history.extend([
+                {'role': 'user', 'content': msg.message},
+                {'role': 'assistant', 'content': msg.response}
+            ])
+        return history
+
+    @api.model
+    def create_channel(self, channel_type='chat', partners_to=None, email_send=False):
+        channel = super().create_channel(channel_type=channel_type, partners_to=partners_to, email_send=email_send)
+        if channel_type == 'chat':
+            channel.write({'is_llm_enabled': True})
+        return channel

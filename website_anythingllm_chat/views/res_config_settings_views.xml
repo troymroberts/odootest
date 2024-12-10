@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.llm.chat</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="LLM Chat" string="LLM Chat" data-key="llm_chat">
+                    <h2>LLM Integration Settings</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="llm_api_url"/>
+                                <div class="text-muted">
+                                    The URL endpoint for your LLM API
+                                </div>
+                                <field name="llm_api_url" class="mt8"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="llm_api_key"/>
+                                <div class="text-muted">
+                                    API Key for authentication (if required)
+                                </div>
+                                <field name="llm_api_key" password="True" class="mt8"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="llm_default_enabled"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="llm_default_enabled"/>
+                                <div class="text-muted">
+                                    Enable LLM integration by default for new chat channels
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

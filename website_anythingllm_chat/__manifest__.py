@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 {
-    'name' : 'Website Chatter Enterprise',
-    'version' : '17.0.0.1',
-    'summary': 'Website Chatter',
-    'category': 'Website',
-    'depends': ['website'],
+    'name': 'Odoo LLM Chat Integration',
+    'version': '17.0.0.1',
+    'summary': 'Integrate LLM with Odoo Chat',
+    'category': 'Discuss',
+    'depends': [
+        'base',
+        'mail',
+        'web',
+        'base_setup'
+    ],
     'data': [
-        'data/chatter_fields_data.xml',
         'security/ir.model.access.csv',
-        'views/chatter_fields_views.xml',
-        'views/chatter_fields_menu.xml',
+        'views/llm_chat_views.xml',
+        'views/res_config_settings_views.xml',
     ],
     'installable': True,
-    'application': True
+    'application': True,
+    'license': 'LGPL-3',
 }
