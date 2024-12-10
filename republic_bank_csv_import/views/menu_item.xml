@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_import_transaction_wizard" model="ir.actions.act_window">
+        <field name="name">Import Republic Bank Trinidad Transactions</field>
+        <field name="res_model">import.transaction.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_import_transaction_wizard" 
+              name="Import Transactions" 
+              parent="account_accountant.menu_accounting" 
+              action="action_import_transaction_wizard"/>
+</odoo>
