@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_payment_provider_wipay_public,payment.provider.wipay.public,payment.model_payment_provider,base.group_public,1,0,0,0
-access_payment_provider_wipay_portal,payment.provider.wipay.portal,payment.model_payment_provider,base.group_portal,1,0,0,0
-access_payment_provider_wipay_user,payment.provider.wipay.user,payment.model_payment_provider,base.group_user,1,1,1,0
+access_payment_provider_wipay_user,payment.provider.wipay.user,payment.model_payment_provider,base.group_user,1,0,0,0
 access_payment_provider_wipay_system,payment.provider.wipay.system,payment.model_payment_provider,base.group_system,1,1,1,1
+access_payment_transaction_wipay_user,payment.transaction.wipay.user,payment.model_payment_transaction,base.group_user,1,0,0,0
+access_payment_transaction_wipay_system,payment.transaction.wipay.system,payment.model_payment_transaction,base.group_system,1,1,1,1

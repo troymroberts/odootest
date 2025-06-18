@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_method_wipay" model="payment.method">
+        <field name="name">Wipay</field>
+        <field name="code">wipay</field>
+        <field name="sequence">10</field>
+        <field name="active">True</field>
+        <field name="support_refund">partial</field>
+        <field name="support_express_checkout">True</field>
+        <field name="support_tokenization">True</field>
+    </record>
+
+</odoo>

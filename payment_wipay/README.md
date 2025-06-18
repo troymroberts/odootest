@@ -1,25 +1,39 @@
 # Wipay Payment Provider for Odoo 18
 
-This module integrates the Wipay payment processor with Odoo 18.
+This module integrates Wipay payment processing with Odoo 18, allowing customers to make payments through Wipay's payment gateway.
 
-## Installation
+## Features
 
-1. Place the `wipay_payment` folder in the `addons` directory of your Odoo instance.
-2. Restart the Odoo server.
-3. Go to the Apps menu in Odoo, search for "Wipay Payment Provider", and install it.
+- Secure payment processing
+- Transaction status tracking
+- Webhook support for payment notifications
+- Support for refunds
 
 ## Configuration
 
-1. Go to `Accounting > Configuration > Payment Providers`, and create a new Wipay provider.
-2. Enter the API Key, Account Number, and select the environment (Sandbox or Live).
-3. Go to `Accounting > Configuration > Payment Methods`, and enable the Wipay payment method.
+After installation, you'll need to configure the Wipay payment provider:
 
-## Security
+1. Go to Invoicing/Accounting > Configuration > Payment Providers
+2. Create a new provider or edit the Wipay provider
+3. Set the following required fields:
+   - Merchant Account ID: Your Wipay merchant account identifier
+   - API Key: Your Wipay API key
+   - Secret Key: Your Wipay secret key for signature verification
+   - API URL: The base URL for API requests (defaults to https://tt.wipayfinancial.com/plugins/payments/request)
 
-- Ensure that the API Key and Account Number are kept secure.
-- Use HTTPS for all communication with the Wipay API.
-- Regularly update the module to the latest version to receive security updates.
+## Technical Information
+
+This module implements:
+- Payment provider form extension
+- Redirect payment flow
+- Callback handling
+- Webhook support for transaction updates
+- Transaction status management
 
 ## Support
 
-For support, please contact [Your Company](https://yourcompany.com).
+For issues or questions, please contact your Odoo service provider or report issues via GitHub.
+
+## License
+
+This module is licensed under LGPL-3.

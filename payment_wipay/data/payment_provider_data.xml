@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
-    <record id="payment_provider_wipay" model="payment.provider">
-        <field name="name">WiPay</field>
+<odoo>
+    <record id="payment_provider_payway" model="payment.provider">
+        <field name="name">Wipay</field>
         <field name="code">wipay</field>
-        <field name="company_id" ref="base.main_company"/>
-        <field name="state">test</field>
-        <field name="support_payment_method_ids" eval="[(4, ref('payment.payment_method_card'))]"/>
+        <field file="payment_wipay/static/description/icon.png" name="image_128" type="base64"/>
+        <field name="module_id" ref="base.module_payment_wipay"/>
+         <field name="redirect_form_view_id" ref="redirect_form"/>
+        <field name="support_refund">partial</field>
+        <field name="support_tokenization">False</field>
+        <field name="allow_tokenization">True</field>
+        <field name="payment_method_ids"
+               eval="[Command.set([
+                         ref('payment_wipay.payment_method_wipay'),
+                     ])]"
+        />
     </record>
+
 </odoo>

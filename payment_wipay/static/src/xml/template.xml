@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+        <t t-name="payment_wipay.redirect_template">
+            <script>
+                window.onload = function () {
+                window.open("<t t-esc='payment_url'/>", "_blank");
+                window.location.href = "/payment/confirmation";
+                };
+            </script>
+            <div>Redirecting to WiPay...</div>
+        </t>
+
+    </templates>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="redirect_form">
+        <xpath expr="//form" position="replace">
+            <form action="https://tt.wipayfinancial.com/plugins/payments/request"
+                  method="POST">
+                <t t-foreach="post_params.items()" t-as="param">
+                    <input type="hidden" t-att-name="param[0]" t-att-value="param[1]"/>
+                </t>
+
+                <input type="submit" value="Checkout"/>
+            </form>
+        </xpath>
+    </template>
+
+
+    <!-- Payment Provider Icon template -->
+    <template id="provider_icon">
+        <span class="border rounded-3 bg-light border-light p-2">
+            <i class="fa fa-credit-card me-2" aria-hidden="true"></i>
+            <b>Wipay</b>
+        </span>
+    </template>
+    <template id="payment_result" name="WiPay Result">
+        <t t-call="website.layout">
+            <div class="container">
+                <h2>Transaction
+                    <t t-esc="status.title()"/>
+                </h2>
+                <p>
+                    <strong>Message:</strong>
+                    <t t-esc="message"/>
+                </p>
+                <p>
+                    <strong>Transaction ID:</strong>
+                    <t t-esc="transaction.reference"/>
+                </p>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- Payment Pay Button template -->
+    <template id="payment_button">
+        <button name="wipay_button"
+                id="o_payment_wipay_button"
+                class="btn btn-primary"
+                data-provider-id="provider_id">
+            <i class="fa fa-credit-card me-2"></i>
+            <span>Pay with Wipay</span>
+        </button>
+    </template>
+
+</odoo>

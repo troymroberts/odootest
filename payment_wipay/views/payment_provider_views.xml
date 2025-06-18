@@ -1,14 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_payment_provider_form_inherit_wipay" model="ir.ui.view">
-        <field name="name">payment.provider.form.inherit.wipay</field>
+
+    <!-- Inherit and extend the Payment Provider Form view -->
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Wipay Provider Form</field>
         <field name="model">payment.provider</field>
         <field name="inherit_id" ref="payment.payment_provider_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='code']" position="after">
-                <field name="wipay_api_key"/>
-                <field name="wipay_account_number"/>
-                <field name="wipay_environment"/>
-            </xpath>
+
+          <group name="provider_credentials" position='inside'>
+                <group invisible="code != 'wipay'">
+                    <field name="wipay_merchant_account_id"/>
+                    <field name="wipay_api_key" />
+                    <field name="wipay_secret_key"/>
+                    <field name="wipay_api_url" />
+                </group>
+          </group>
+
         </field>
     </record>
+
+
+
 </odoo>

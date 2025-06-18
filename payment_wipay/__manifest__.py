@@ -1,31 +1,31 @@
+# -*- coding: utf-8 -*-
 {
-    'name': 'WiPay Payment Provider',
-    'version': '18.0.1.0.0',  # Updated version for Odoo 18
-    'category': 'Accounting/Payment Providers',
-    'sequence': 350,
-    'summary': 'Process payments through WiPay Caribbean payment gateway',
-    'description': """Accept payments through WiPay's payment gateway.""",
-    'author': 'Paxgenesis',
-    'website': 'https://www.paxgenesis.com',
-    'depends': [
-        'payment',
-        'account',
-        'payment_test'
-    ],
+    'name': 'Wipay Payment Acquirer',
+    'version': '1.0',
+    'category': 'Accounting/Payment Acquirers',
+    'sequence': 380,
+    'summary': 'Payment Acquirer: Wipay Implementation',
+    'description': """Wipay Payment Acquirer""",
+    'depends': ['payment', 'website_payment', 'website', 'website_sale'],
     'data': [
         'security/ir.model.access.csv',
-        'views/payment_provider_views.xml',
         'views/payment_wipay_templates.xml',
+        'views/payment_provider_views.xml',
+        'data/payment_method_data.xml',
         'data/payment_provider_data.xml',
+
     ],
+    'application': False,
+    'installable': True,
+    'license': 'LGPL-3',
     'assets': {
         'web.assets_frontend': [
-            'payment_wipay/static/src/js/payment_form.js',
-            'payment_wipay/static/src/scss/payment_form.scss',
+            '/payment_wipay/static/src/js/payment_form.js',
+            '/payment_wipay/static/src/xml/template.xml',
         ],
     },
-    'application': False,
-    'auto_install': False,
-    'license': 'LGPL-3',
-    'installable': True,
+    'author': 'PaxGenesis',
+    'post_init_hook': 'post_init_hook',
+    'uninstall_hook': 'uninstall_hook',
+    'website': 'https://www.paxgenesis.com',
 }
