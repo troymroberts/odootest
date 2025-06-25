@@ -20,20 +20,41 @@ class PaymentProvider(models.Model):
     wipay_merchant_account_id = fields.Char(
         string="Merchant Account ID",
         help="The merchant account identifier provided by Wipay",
+        default='1234567890'
     )
     wipay_api_key = fields.Char(
         string="API Key",
         help="The API key provided by Wipay",
+        default='123'
     )
     wipay_secret_key = fields.Char(
         string="Secret Key",
         help="The secret key provided by Wipay for signature verification",
+        default='123'
     )
     wipay_api_url = fields.Char(
         string="API URL",
-        help="The base URL for API requests",
-        default="https://tt.wipayfinancial.com/plugins/payments/request",
+        help="The base URL for WiPay API requests",
     )
+
+    wipay_currency = fields.Selection([
+        ('TTD', 'TTD'),
+        ('JMD', 'JMD'),
+        ('USD', 'USD'),
+    ], string='WiPay Currency', required=True, default='USD')
+
+    @api.onchange('wipay_currency')
+    def _onchange_wipay_currency(self):
+        """Auto-update the API URL when the currency is changed."""
+        currency_url_map = {
+            'TTD': 'https://tt.wipayfinancial.com/plugins/payments/request',
+            'JMD': 'https://jm.wipayfinancial.com/plugins/payments/request',
+            'USD': 'https://tt.wipayfinancial.com/plugins/payments/request',  # Defaulting USD to TT
+        }
+
+        self.wipay_api_url = currency_url_map.get(self.wipay_currency, '')
+
+
 
     def _get_default_payment_method_id(self):
         self.ensure_one()

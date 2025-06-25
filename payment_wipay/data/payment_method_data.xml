@@ -8,6 +8,7 @@
         <field name="support_refund">partial</field>
         <field name="support_express_checkout">True</field>
         <field name="support_tokenization">True</field>
+        <field file="payment_wipay/static/description/wipayimg.jpg" name="image" type="base64"/>
     </record>
 
 </odoo>

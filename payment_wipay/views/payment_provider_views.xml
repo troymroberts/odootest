@@ -14,6 +14,8 @@
                     <field name="wipay_api_key" />
                     <field name="wipay_secret_key"/>
                     <field name="wipay_api_url" />
+                    <field name="wipay_currency" />
+
                 </group>
           </group>
 
