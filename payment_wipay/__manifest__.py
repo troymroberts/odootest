@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Wipay Payment Acquirer',
-    'version': '1.0',
+    'version': '1.2',
     'category': 'Accounting/Payment Acquirers',
     'sequence': 380,
     'summary': 'Payment Acquirer: Wipay Implementation',

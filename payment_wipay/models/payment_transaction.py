@@ -35,98 +35,101 @@ class PaymentTransaction(models.Model):
         return res
 
     def _get_specific_rendering_values(self, processing_values):
-        res = super()._get_specific_rendering_values(processing_values)
-        if self.provider_code != 'wipay':
-            return res
-        base_url = self.provider_id.get_base_url()
-        return_url = urls.url_join(base_url, '/payment/wipay/return')
-        notify_url = urls.url_join(base_url, '/payment/wipay/webhook')
-        origin = "WiPay"
-        country_code = self.partner_id.country_id.code
-        payment_data = {
-            'account_number': self.provider_id.wipay_merchant_account_id,
-
-            'order_id': self.reference,
-
-            'environment': 'live' if self.provider_id.state == 'enable' else 'sandbox',
-            'response_url': return_url,
-            'webhook_url': notify_url,
-            'email': self.partner_email,
-            'name': self.partner_name,
-            'phone': self.partner_phone,
-            'zipcode': self.partner_zip,
-            'addr1': self.partner_address,
-            'addr2': self.partner_city,
-            'origin': origin,
-            'fee_structure': 'customer_pay',
-            'method': 'credit_card',
-            'description': f"Payment for {self.reference}"
-        }
-
-        # Create signature for the request if api key is provided
-        if self.provider_id.wipay_api_key:
-            signature_string = f"{self.provider_id.wipay_api_key}{self.provider_id.wipay_merchant_account_id}{self.amount:.2f}{self.reference}"
-            signature = hashlib.md5(signature_string.encode('utf-8')).hexdigest()
-            payment_data['signature'] = signature
-
-        # Make request to Wipay to get payment URL
         try:
-            _logger.info("Making request to Wipay with data: %s", pprint.pformat(payment_data))
-            headers = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
+            res = super()._get_specific_rendering_values(processing_values)
+            if self.provider_code != 'wipay':
+                return res
+            base_url = self.provider_id.get_base_url()
+            return_url = urls.url_join(base_url, '/payment/wipay/return')
+            notify_url = urls.url_join(base_url, '/payment/wipay/webhook')
+            origin = "WiPay"
+            country_code = self.partner_id.country_id.code
+            payment_data = {
+                'account_number': self.provider_id.wipay_merchant_account_id,
 
+                'order_id': self.reference,
+
+                'environment': 'live' if self.provider_id.state == 'enable' else 'sandbox',
+                'response_url': return_url,
+                'webhook_url': notify_url,
+                'email': self.partner_email,
+                'name': self.partner_name,
+                'phone': self.partner_phone,
+                'zipcode': self.partner_zip,
+                'addr1': self.partner_address,
+                'addr2': self.partner_city,
+                'origin': origin,
+                'fee_structure': 'customer_pay',
+                'method': 'credit_card',
+                'description': f"Payment for {self.reference}"
             }
 
-            # Add authorization header if API key is available
+            # Create signature for the request if api key is provided
             if self.provider_id.wipay_api_key:
-                headers['Authorization'] = f"Bearer {self.provider_id.wipay_api_key}"
+                signature_string = f"{self.provider_id.wipay_api_key}{self.provider_id.wipay_merchant_account_id}{self.amount:.2f}{self.reference}"
+                signature = hashlib.md5(signature_string.encode('utf-8')).hexdigest()
+                payment_data['signature'] = signature
 
-            country_code = self.partner_id.country_id.code
-            if country_code not in ['TT','BB','JM']:
-                return ValidationError(_(f"Wipay: Country {self.partner_id.country_id.name} not supported"))
+            # Make request to Wipay to get payment URL
+            try:
+                _logger.info("Making request to Wipay with data: %s", pprint.pformat(payment_data))
+                headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
 
-            pay_currency = self.currency_id.name,
-            if pay_currency != self.provider_id.wipay_currency:
-                pay_amount = self.currency_id._convert(self.amount, self.env['res.currency'].search([('name','=',self.provider_id.wipay_currency)]))
+                }
 
-            payment_data['country_code'] = country_code
-            payment_data['currency'] = self.provider_id.wipay_currency
-            payment_data['total'] =  f"{pay_amount:.2f}"
+                # Add authorization header if API key is available
+                if self.provider_id.wipay_api_key:
+                    headers['Authorization'] = f"Bearer {self.provider_id.wipay_api_key}"
 
-            response = requests.post(
-                self.provider_id.wipay_api_url,
-                data=payment_data,
-                headers=headers
-            )
+                country_code = self.partner_id.country_id.code
+                if country_code not in ['TT','BB','JM']:
+                    return ValidationError(_(f"Wipay: Country {self.partner_id.country_id.name} not supported"))
 
-            print(response.text)
-            # print(response.result)
-            response.raise_for_status()
-            response_data = response.json()
-            _logger.info("Received response from Wipay: %s", pprint.pformat(response_data))
-            self.provider_reference = response_data.get('transaction_id')
-            if response_data.get('url'):
-                self.wipay_payment_id = response_data.get('transaction_id')
-                payment_data.update({
-                    'payment_url': response_data.get('url'),
-                    'reference': self.reference,
-                    'provider_reference': response_data.get('transaction_id'),
-                    'post_params': payment_data  # ✅ NOT json.dumps
-                })
-                return payment_data
+                pay_currency = self.currency_id.name,
+                if pay_currency != self.provider_id.wipay_currency:
+                    pay_amount = self.currency_id._convert(self.amount, self.env['res.currency'].search([('name','=',self.provider_id.wipay_currency)]))
+
+                payment_data['country_code'] = country_code
+                payment_data['currency'] = self.provider_id.wipay_currency
+                payment_data['total'] =  f"{pay_amount:.2f}"
+
+                response = requests.post(
+                    self.provider_id.wipay_api_url,
+                    data=payment_data,
+                    headers=headers
+                )
+
+                print(response.text)
+                # print(response.result)
+                response.raise_for_status()
+                response_data = response.json()
+                _logger.info("Received response from Wipay: %s", pprint.pformat(response_data))
+                self.provider_reference = response_data.get('transaction_id')
+                if response_data.get('url'):
+                    self.wipay_payment_id = response_data.get('transaction_id')
+                    payment_data.update({
+                        'payment_url': response_data.get('url'),
+                        'reference': self.reference,
+                        'provider_reference': response_data.get('transaction_id'),
+                        'post_params': payment_data  # ✅ NOT json.dumps
+                    })
+                    return payment_data
 
 
-            else:
-                error_msg = response_data.get('message', 'Unknown error')
-                _logger.error("Wipay payment error: %s", error_msg)
-                raise ValidationError(_("Wipay: %s", error_msg))
+                else:
+                    error_msg = response_data.get('message', 'Unknown error')
+                    _logger.error("Wipay payment error: %s", error_msg)
+                    raise ValidationError(_("Wipay: %s", error_msg))
 
-        except (requests.exceptions.RequestException, ValueError) as e:
-            _logger.exception(f"Error contacting Wipay API {e}")
+            except (requests.exceptions.RequestException, ValueError) as e:
+                _logger.exception(f"Error contacting Wipay API {e}")
+                raise ValidationError(_("Could not establish connection with Wipay API: %s", str(e)))
+
+            return res
+        except Exception as e:
             raise ValidationError(_("Could not establish connection with Wipay API: %s", str(e)))
-
-        return res
 
     def _get_tx_from_feedback_data(self, provider_code, data):
         """ Override of payment to find the transaction based on Wipay data.
