@@ -2,6 +2,7 @@
 
 import datetime
 import logging
+import pdb
 import pprint
 import requests
 import json
@@ -81,13 +82,21 @@ class PaymentTransaction(models.Model):
 
                 pay_currency = self.currency_id.name
                 if pay_currency != self.provider_id.wipay_currency:
-                    pay_amount = self.currency_id._convert(self.amount, self.env['res.currency'].search([('name', '=', self.provider_id.wipay_currency)]), self.company_id)
+                    src_currency = self.env['res.currency'].search([('name', '=', self.provider_id.wipay_currency)])
+                    print(self.amount)
+                    print(src_currency.name)
+
+                    print(self.currency_id.name)
+                    pay_amount = self.currency_id._convert(self.amount, src_currency)
                 else:
                     pay_amount = self.amount
+
+                print(pay_amount)
 
                 payment_data['country_code'] = country_code
                 payment_data['currency'] = self.provider_id.wipay_currency
                 payment_data['total'] = f"{pay_amount:.2f}"
+                pdb.set_trace()
 
                 response = requests.post(self.provider_id.wipay_api_url, data=payment_data, headers=headers)
                 response.raise_for_status()
