@@ -96,7 +96,6 @@ class PaymentTransaction(models.Model):
                 payment_data['country_code'] = country_code
                 payment_data['currency'] = self.provider_id.wipay_currency
                 payment_data['total'] = f"{pay_amount:.2f}"
-                pdb.set_trace()
 
                 response = requests.post(self.provider_id.wipay_api_url, data=payment_data, headers=headers)
                 response.raise_for_status()
